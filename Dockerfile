@@ -15,10 +15,10 @@ RUN apt-get clean \
 WORKDIR /work
 
 # install python packages
-COPY pyproject.toml .
+COPY scispacy/ scispacy/
 
 RUN pip install --upgrade pip
-RUN pip install -r pyproject.toml
+RUN pip install .
 RUN pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_sm-0.5.4.tar.gz
 RUN python -m spacy download en_core_web_sm
 RUN python -m spacy download en_core_web_md
@@ -26,7 +26,7 @@ RUN python -m spacy download en_core_web_md
 # add the code as the final step so that when we modify the code
 # we don't bust the cached layers holding the dependencies and
 # system packages.
-COPY scispacy/ scispacy/
+
 COPY scripts/ scripts/
 COPY tests/ tests/
 COPY .flake8 .flake8
