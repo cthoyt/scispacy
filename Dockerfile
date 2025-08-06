@@ -12,12 +12,13 @@ RUN apt-get clean \
     wget \
     awscli
 
+RUN pip install --upgrade pip
+
 WORKDIR /work
 
 # install python packages
-COPY scispacy/ scispacy/
+COPY scispacy/ .
 
-RUN pip install --upgrade pip
 RUN pip install .
 RUN pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_sm-0.5.4.tar.gz
 RUN python -m spacy download en_core_web_sm
