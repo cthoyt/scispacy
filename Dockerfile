@@ -15,9 +15,9 @@ RUN apt-get clean \
 WORKDIR /work
 
 # install python packages
-COPY requirements.in .
+COPY pyproject.toml .
 
-RUN pip install -r requirements.in
+RUN pip install -r pyproject.toml
 RUN pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.5.4/en_core_sci_sm-0.5.4.tar.gz
 RUN python -m spacy download en_core_web_sm
 RUN python -m spacy download en_core_web_md

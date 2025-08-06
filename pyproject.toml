@@ -64,6 +64,10 @@ tests = [
     "flake8",
     "black",
     "mypy",
+    "types-requests",
+    "types-setuptools",
+    "types-tabulate",
+    "twine",
 ]
 
 [tool.setuptools.packages.find]
