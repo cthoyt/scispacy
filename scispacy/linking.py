@@ -114,6 +114,7 @@ class EntityLinker:
         kb: KnowledgeBase,
         *,
         ann_index_out_dir: Optional[str] = None,
+        ef_search: int = 200,
         candidate_generator_kwargs: Optional[Dict[str, Any]] = None,
         **entity_linker_kwargs: Any,
     ) -> Self:
@@ -152,7 +153,7 @@ class EntityLinker:
             doc = linker(nlp(text))
         """
         concept_aliases, tfidf_vectorizer, ann_index = create_tfidf_ann_index(
-            ann_index_out_dir, kb
+            ann_index_out_dir, kb, ef_search=ef_search,
         )
         candidate_generator = CandidateGenerator(
             ann_index,
