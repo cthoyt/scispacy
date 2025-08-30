@@ -115,9 +115,12 @@ class MentionCandidate(NamedTuple):
     similarities: List[float]
 
 
+DEFAULT_EF_SEARCH = 200
+
+
 def load_approximate_nearest_neighbours_index(
     linker_paths: LinkerPaths,
-    ef_search: int = 200,
+    ef_search: int = DEFAULT_EF_SEARCH,
 ) -> FloatIndex:
     """
     Load an approximate nearest neighbours index from disk.
@@ -203,7 +206,7 @@ class CandidateGenerator:
         ann_concept_aliases_list: Optional[List[str]] = None,
         kb: Optional[KnowledgeBase] = None,
         verbose: bool = False,
-        ef_search: int = 200,
+        ef_search: int = DEFAULT_EF_SEARCH,
         name: Optional[str] = None,
     ) -> None:
         if name is not None and any(
@@ -366,7 +369,7 @@ class CandidateGenerator:
 def create_tfidf_ann_index(
     out_path: Optional[str],
     kb: Optional[KnowledgeBase] = None,
-    ef_search: int = 200,
+    ef_search: Optional[int] = None,
 ) -> Tuple[List[str], TfidfVectorizer, FloatIndex]:
     """
     Build tfidf vectorizer and ann index.
@@ -469,7 +472,7 @@ def create_tfidf_ann_index(
     )
     ann_index.addDataPointBatch(concept_alias_tfidfs)
     ann_index.createIndex(index_params, print_progress=True)
-    query_time_params = {"efSearch": ef_search}
+    query_time_params = {"efSearch": ef_search or DEFAULT_EF_SEARCH}
     ann_index.setQueryTimeParams(query_time_params)
     if out_path is not None:
         ann_index_path = os.path.join(out_path, "nmslib_index.bin")

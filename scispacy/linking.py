@@ -114,7 +114,7 @@ class EntityLinker:
         kb: KnowledgeBase,
         *,
         ann_index_out_dir: Optional[str] = None,
-        ef_search: int = 200,
+        ef_search: Optional[int] = None,
         candidate_generator_kwargs: Optional[Dict[str, Any]] = None,
         **entity_linker_kwargs: Any,
     ) -> Self:
